@@ -1,4 +1,9 @@
 const Task = require("../models/Task");
+const User = require("../models/User");
+
+const getUserId = (req) => {
+  return req.headers["x-user-id"] || req.body.userId || req.query.userId;
+};
 
 const sameDay = (a, b) => {
   if (!a || !b) return false;
@@ -12,7 +17,12 @@ const sameDay = (a, b) => {
 };
 
 const getTasks = async (req, res) => {
-  const tasks = await Task.find().sort({ createdAt: -1 });
+  const userId = getUserId(req);
+  if (!userId)
+    return res.status(400).json({
+      error: "userId Required",
+    });
+  const tasks = await Task.find({ userId }).sort({ createdAt: -1 });
   res.json({
     message: "Tasks:",
     tasks,
@@ -20,6 +30,11 @@ const getTasks = async (req, res) => {
 };
 
 const createTask = async (req, res) => {
+  const userId = getUserId(req);
+  if (!userId)
+    return res.status(400).json({
+      error: "userId Required",
+    });
   const { title, category, coinsReward } = req.body;
   if (!title || !title.trim())
     return res.status(400).json({
@@ -27,6 +42,7 @@ const createTask = async (req, res) => {
     });
 
   const task = await Task.create({
+    userId,
     title: title.trim(),
     category,
     coinsReward: coinsReward || 5,
@@ -39,6 +55,12 @@ const createTask = async (req, res) => {
 };
 
 const completeTask = async (req, res) => {
+  const userId = getUserId(req);
+  if (!userId)
+    return res.status(400).json({
+      error: "userId Required",
+    });
+
   const task = await Task.findById(req.params.id);
   if (!task)
     return res.status(404).json({
@@ -46,7 +68,7 @@ const completeTask = async (req, res) => {
     });
 
   const now = new Date();
-  const last = task.completedDates[task.completedDates.lengt - 1];
+  const last = task.completedDates[task.completedDates.length - 1];
 
   if (sameDay(last, now))
     return res.status(404).json({
@@ -63,7 +85,22 @@ const completeTask = async (req, res) => {
   task.streak.best = Math.max(task.streak.best, task.streak.current);
 
   await task.save();
-  res.json(task);
+
+  let user = await User.findOne({ userId });
+  if (!user) {
+    user = await User.create({
+      userId,
+      coins: 0,
+    });
+  }
+  user.coins += task.coinsReward || 0;
+  await user.save();
+
+  res.json({
+    message: "Task Completed",
+    task,
+    coins: user.coins,
+  });
 };
 
 const deleteTask = async (req, res) => {

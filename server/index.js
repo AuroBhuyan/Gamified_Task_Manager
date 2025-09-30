@@ -3,16 +3,18 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 require("dotenv").config();
 
+const taskRoutes = require("./routes/taskRoutes");
+const userRoutes = require("./routes/userRoutes");
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
 //Routes
-const taskRoutes = require("./routes/taskRoutes");
-
 app.get("/", (req, res) => res.send("Backend Running!"));
 app.use("/api/tasks", taskRoutes);
+app.use("/api/users", userRoutes);
 
 const startServer = async () => {
   try {

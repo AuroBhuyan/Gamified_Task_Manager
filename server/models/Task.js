@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const TaskSchema = new mongoose.Schema({
+  userId: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -28,6 +32,10 @@ const TaskSchema = new mongoose.Schema({
   coinsReward: {
     type: Number,
     default: 5,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 
