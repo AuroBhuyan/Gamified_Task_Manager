@@ -1,3 +1,10 @@
+
+
+
+
+
+# Tech 
+
 1️⃣ express
 
 What it is: A lightweight framework for Node.js that makes it easy to build web servers and APIs.
@@ -27,3 +34,22 @@ Why we need it: We can safely store sensitive info like database URLs or API key
 What it is: A development tool that automatically restarts the server whenever you change a file.
 
 Why we need it: Without it, every time you change index.js, you’d have to stop and start the server manually.
+
+# Erros 
+
+In your gamified task manager:
+
+Users can mark a task as “completed” multiple times.
+
+You only want one completion per day to count towards streaks.
+
+sameDay(lastCompletion, now) checks:
+
+If the last completion date is today → reject the new completion.
+
+If not → allow completion and update streak.
+
+Without this, a user could spam “complete task” multiple times a day and artificially inflate their streaks or coins.
+
+
+
