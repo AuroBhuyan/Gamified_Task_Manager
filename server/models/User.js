@@ -14,6 +14,10 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  accumulatedDamage: {
+    type: Number,
+    default: 0,
+  },
 });
 
 UserSchema.set("toJSON", {

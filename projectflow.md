@@ -37,7 +37,7 @@ Why we need it: Without it, every time you change index.js, you’d have to stop
 
 # Erros 
 
-In your gamified task manager:
+### In your gamified task manager:
 
 Users can mark a task as “completed” multiple times.
 
@@ -52,4 +52,4 @@ If not → allow completion and update streak.
 Without this, a user could spam “complete task” multiple times a day and artificially inflate their streaks or coins.
 
 
-
+### request limit 403 status using node fetch

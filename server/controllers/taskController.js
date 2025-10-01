@@ -91,15 +91,20 @@ const completeTask = async (req, res) => {
     user = await User.create({
       userId,
       coins: 0,
+      accumulatedDamage:0,
     });
   }
   user.coins += task.coinsReward || 0;
+  user.accumulatedDamage =
+    (user.accumulatedDamage || 0) + (task.coinsReward || 0) * 5;
+
   await user.save();
 
   res.json({
     message: "Task Completed",
     task,
     coins: user.coins,
+    pendingAttack: user.accumulatedDamage,
   });
 };
 

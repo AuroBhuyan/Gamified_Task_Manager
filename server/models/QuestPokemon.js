@@ -21,4 +21,4 @@ QuestPokemonSchema.set("toJSON", {
   },
 });
 
-modulule.exports = mongoose.model("QuestPokemon", QuestPokemonSchema);
+module.exports = mongoose.model("QuestPokemon", QuestPokemonSchema);

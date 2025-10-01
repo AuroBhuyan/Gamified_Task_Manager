@@ -6,6 +6,7 @@ require("dotenv").config();
 const taskRoutes = require("./routes/taskRoutes");
 const userRoutes = require("./routes/userRoutes");
 const rewardRoutes = require("./routes/rewardRoutes");
+const questRoutes = require("./routes/questRoutes");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get("/", (req, res) => res.send("Backend Running!"));
 app.use("/api/tasks", taskRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/rewards", rewardRoutes);
+app.use("/api/quest", questRoutes);
 
 const startServer = async () => {
   try {
