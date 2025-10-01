@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Reward = require("../models/Reward");
 
 const getUserId = (req) => {
   return req.headers["x-user-id"] || req.body.userId || req.query.userId;
@@ -24,10 +25,16 @@ const spend = async (req, res) => {
       error: "userId Required",
     });
 
-  const { cost, rewardId } = req.body;
-  if (typeof cost !== "number")
+  const { rewardId } = req.body;
+  if (!rewardId)
     return res.status(400).json({
-      error: "Cost(Number) is Requires",
+      error: "rewardId is Required",
+    });
+
+  const reward = await Reward.findOne({ _id: rewardId, userId });
+  if (!reward)
+    return res.status(400).json({
+      error: "Reward Not Found For This User",
     });
 
   let user = await User.findOne({ userId });
@@ -37,18 +44,18 @@ const spend = async (req, res) => {
       coins: 0,
     });
 
-  if (user.coins < cost)
+  if (user.coins < reward.cost)
     return res.status(400).json({
       error: "Not Enough Coins",
     });
 
-  user.coins -= cost;
+  user.coins -= reward.cost;
   await user.save();
 
   res.json({
     ok: true,
     coins: user.coins,
-    rewardId,
+    reward,
   });
 };
 

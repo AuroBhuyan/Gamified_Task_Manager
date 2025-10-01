@@ -61,7 +61,7 @@ const completeTask = async (req, res) => {
       error: "userId Required",
     });
 
-  const task = await Task.findById(req.params.id);
+  const task = await Task.findById({ _id: req.params.id, userId });
   if (!task)
     return res.status(404).json({
       error: "Task Not Found",
@@ -104,7 +104,10 @@ const completeTask = async (req, res) => {
 };
 
 const deleteTask = async (req, res) => {
-  const task = await Task.findById(req.params.id);
+  const userId = getUserId(req);
+  if (!userId) return res.status(400).json({ error: "userId required" });
+
+  const task = await Task.findOne({ _id: req.params.id, userId });
   if (!task)
     return res.status(404).json({
       error: "Task Not Found",
@@ -116,14 +119,16 @@ const deleteTask = async (req, res) => {
 };
 
 const updateTask = async (req, res) => {
-  const { title, category, coinsReward } = req.body;
+  const userId = getUserId(req);
+  if (!userId) return res.status(400).json({ error: "userId required" });
 
-  const task = await Task.findById(req.params.id);
+  const task = await Task.findById({ _id: req.params.id, userId });
   if (!task)
     return res.status(404).json({
       error: "Task Not Found",
     });
 
+  const { title, category, coinsReward } = req.body;
   if (title) task.title = title.trim();
   if (category) task.category = category;
   if (coinsReward !== undefined) task.coinsReward = coinsReward;
