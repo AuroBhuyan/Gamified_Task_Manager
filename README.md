@@ -140,5 +140,5 @@ This project is open-source and available under the **MIT License**.
 
 Developed by **Auro Bhuyan**
 
-* GitHub: [github.com/AuroBhuyan](https://github.com/your-username)
-* Email: [aurobhuyanprofession@example.com](mailto:your-email@example.com)
+* GitHub: [github.com/AuroBhuyan](https://github.com/AuroBhuyan)
+* Email: [aurobhuyanprofession@example.com](mailto:your-aurobhuyanprofession@example.com)

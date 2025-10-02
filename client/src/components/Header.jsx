@@ -18,7 +18,11 @@ const Header = () => {
 
   return (
     <header className="flex justify-between items-center p-3 bg-gray-50 border-b border-gray-200">
-      <div className="font-bold">Gamified Task Manager</div>
+      <div className="font-bold">
+        <Link to="/" >
+        TaskMon
+        </Link>
+      </div>
       <div className="flex items-center gap-4">
         <div>
           💰<strong>{coins}</strong>
