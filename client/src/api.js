@@ -44,3 +44,15 @@ async function fetchJSON(url, opts = {}) {
   
   /* User */
   export const getUser = () => fetchJSON("/api/users/me");
+
+  /* Rewards */
+export const getRewards = () => fetchJSON("/api/rewards");
+export const createReward = (payload) =>
+  fetchJSON("/api/rewards", { method: "POST", body: payload });
+export const updateReward = (id, payload) =>
+  fetchJSON(`/api/rewards/${id}`, { method: "PATCH", body: payload });
+export const deleteReward = (id) =>
+  fetchJSON(`/api/rewards/${id}`, { method: "DELETE" });
+  export const redeemReward = (id) =>
+  fetchJSON(`/api/rewards/${id}/redeem`, { method: "POST" });
+

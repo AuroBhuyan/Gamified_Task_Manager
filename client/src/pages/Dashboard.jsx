@@ -18,6 +18,7 @@ const Dashboard = () => {
         {card("Tasks", "Create and complete tasks", "/tasks")}
         {card("Quest", "Generate & fight Pokemon", "/quest")}
         {card("Profile", "View Captured Pokemon & Coins", "/profile")}
+        {card("Rewards", "View Captured Pokemon & Coins", "/rewards")}
       </div>
     </div>
   );

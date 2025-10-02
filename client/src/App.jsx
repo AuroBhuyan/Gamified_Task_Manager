@@ -5,6 +5,7 @@ import Tasks from "./pages/Tasks";
 import Quest from "./pages/Quest";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
+import Rewards from "./pages/Rewards";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/quest" element={<Quest />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/rewards" element={<Rewards />} />
         </Routes>
       </div>
     </div>
